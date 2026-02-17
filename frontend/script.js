@@ -1,4 +1,4 @@
-// ✅ RENDER BACKEND URL
+// 🔴 VERY IMPORTANT → CHANGE THIS AFTER DEPLOYMENT
 const API_URL = "https://smartrecipegenerator-1-cod7.onrender.com";
 
 async function getRecipe(){
@@ -42,18 +42,14 @@ async function getRecipe(){
         recipes.forEach(recipe => {
 
             let stepsList = "";
-            if(recipe.steps){
-                recipe.steps.forEach(step => {
-                    stepsList += `<li>${step}</li>`;
-                });
-            }
+            recipe.steps.forEach(step => {
+                stepsList += `<li>${step}</li>`;
+            });
 
             let ingredientsList = "";
-            if(recipe.ingredients){
-                recipe.ingredients.forEach(ing => {
-                    ingredientsList += `<li>${ing}</li>`;
-                });
-            }
+            recipe.ingredients.forEach(ing => {
+                ingredientsList += `<li>${ing}</li>`;
+            });
 
             output += `
             <div class="card">
@@ -163,6 +159,3 @@ async function uploadImage(){
 }
 
 window.uploadImage = uploadImage;
-window.getRecipe = getRecipe;
-window.rateRecipe = rateRecipe;
-window.favoriteRecipe = favoriteRecipe;
