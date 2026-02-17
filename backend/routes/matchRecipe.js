@@ -1,72 +1,67 @@
 const express = require("express");
 const router = express.Router();
-const Recipe = require("../models/Recipe");
+const fs = require("fs");
+const path = require("path");
 
-router.post("/match", async (req, res) => {
-  try {
-    // ✅ GET DATA FROM FRONTEND
-    let { ingredients, diet, difficulty, time } = req.body;
+router.post("/match", (req, res) => {
+try {
 
-    console.log("User Ingredients:", ingredients);
+let { ingredients = [], diet, difficulty, time } = req.body;
 
-    // ✅ CLEAN USER INGREDIENTS
-    ingredients = (ingredients || []).map(i => i.trim().toLowerCase());
+// 🛡️ SAFETY CHECK
+if (!Array.isArray(ingredients)) {
+    return res.json({ recipes: [] });
+}
 
-    // ✅ BUILD QUERY OBJECT (optional filters only)
-    let query = {};
+// CLEAN USER INGREDIENTS
+ingredients = ingredients.map(i => i.trim().toLowerCase());
 
-    if (diet && diet !== "any" && diet !== "No Preference") {
-      query.diet = diet.toLowerCase();
-    }
+if (diet) diet = diet.toLowerCase();
+if (difficulty) difficulty = difficulty.toLowerCase();
 
-    if (difficulty && difficulty !== "any" && difficulty !== "Any Difficulty") {
-      query.difficulty = difficulty.toLowerCase();
-    }
+// ✅ DEPLOYMENT SAFE JSON PATH
+const dataPath = path.resolve(process.cwd(), "backend/data/recipes.json");
 
-    if (time && Number(time) > 0) {
-      query.time = { $lte: Number(time) };
-    }
+let recipes = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
 
-    console.log("Final Query:", query);
+// FILTER
+recipes = recipes.filter(recipe => {
 
-    // ✅ FETCH RECIPES (broad search first, then score)
-    let recipes = await Recipe.find(query);
+    if (diet && recipe.diet.toLowerCase() !== diet) return false;
+    if (difficulty && recipe.difficulty.toLowerCase() !== difficulty) return false;
+    if (time && recipe.time > Number(time)) return false;
 
-    console.log("Recipes after filter:", recipes.length);
+    return true;
+});
 
-    if (!recipes.length) {
-      return res.json({ recipes: [] });
-    }
+// SCORING
+let scoredRecipes = recipes.map(recipe => {
 
-    // ✅ MATCH SCORING
-    let scoredRecipes = recipes.map(recipe => {
-      let recipeIngredients = (recipe.ingredients || []).map(i =>
-        i.trim().toLowerCase()
-      );
+    let recipeIngredients =
+    recipe.ingredients.map(i => i.trim().toLowerCase());
 
-      let matchCount = recipeIngredients.filter(i =>
-        ingredients.includes(i)
-      ).length;
+    let matchCount = recipeIngredients.filter(i =>
+    ingredients.includes(i)
+    ).length;
 
-      let score =
-        recipeIngredients.length > 0
-          ? matchCount / recipeIngredients.length
-          : 0;
+    let score = matchCount / recipeIngredients.length;
 
-      return {
-        ...recipe._doc,
+    return {
+        ...recipe,
         score
-      };
-    });
+    };
+});
 
-    // ✅ KEEP ALL RECIPES, SORT BY BEST MATCH
-    scoredRecipes.sort((a, b) => b.score - a.score);
+scoredRecipes = scoredRecipes.filter(r => r.score > 0);
+scoredRecipes.sort((a,b)=>b.score - a.score);
 
-    res.json({ recipes: scoredRecipes });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ msg: "Matching error" });
-  }
+res.json({recipes: scoredRecipes});
+
+}
+catch(err){
+console.log(err);
+res.status(500).json({msg:"Matching error"});
+}
 });
 
 module.exports = router;

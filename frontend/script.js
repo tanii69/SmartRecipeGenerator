@@ -1,3 +1,7 @@
+const API_URL = "http://localhost:5000"; 
+// ⚠️ AFTER DEPLOYMENT CHANGE THIS TO YOUR BACKEND URL
+
+// ================= GET RECIPES =================
 async function getRecipe(){
 
     document.getElementById("result").innerHTML = "Loading Recipes...";
@@ -6,17 +10,14 @@ async function getRecipe(){
     let time = document.getElementById("time").value;
     let diet = document.getElementById("diet").value;
     let difficulty = document.getElementById("difficulty").value;
-    let servings = document.getElementById("servings").value;
-    let health = document.getElementById("health").value;
 
-    // ✅ CLEAN INGREDIENTS (VERY IMPORTANT)
     let ingredientsArray = input
         .split(",")
         .map(i => i.trim().toLowerCase());
 
     try{
 
-        let response = await fetch("http://localhost:5000/recipe/match", {
+        let response = await fetch(`${API_URL}/recipe/match`, {
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -25,15 +26,11 @@ async function getRecipe(){
                 ingredients: ingredientsArray,
                 time: time,
                 diet: diet,
-                health: health,
-                difficulty: difficulty,
-                servings: servings
+                difficulty: difficulty
             })
         });
 
         let data = await response.json();
-
-        // ✅ IMPORTANT FIX (backend sends {recipes:[]})
         let recipes = data.recipes;
 
         if(!recipes || recipes.length === 0){
@@ -46,18 +43,14 @@ async function getRecipe(){
         recipes.forEach(recipe => {
 
             let stepsList = "";
-            if(recipe.steps && recipe.steps.length > 0){
-                recipe.steps.forEach(step => {
-                    stepsList += `<li>${step}</li>`;
-                });
-            }
+            recipe.steps.forEach(step => {
+                stepsList += `<li>${step}</li>`;
+            });
 
             let ingredientsList = "";
-            if(recipe.ingredients && recipe.ingredients.length > 0){
-                recipe.ingredients.forEach(ing => {
-                    ingredientsList += `<li>${ing}</li>`;
-                });
-            }
+            recipe.ingredients.forEach(ing => {
+                ingredientsList += `<li>${ing}</li>`;
+            });
 
             output += `
             <div class="card">
@@ -67,21 +60,16 @@ async function getRecipe(){
                 <p><b>Time:</b> ${recipe.time} mins</p>
                 <p><b>Calories:</b> ${recipe.calories} kcal</p>
                 <p><b>Protein:</b> ${recipe.protein} g</p>
-                <p><b>Cuisine:</b> ${recipe.cuisine || "General"}</p>
                 <p><b>Match Score:</b> ${(recipe.score*100).toFixed(0)}%</p>
 
                 <p><b>Ingredients:</b></p>
-                <ul>
-                    ${ingredientsList}
-                </ul>
+                <ul>${ingredientsList}</ul>
 
                 <p><b>Steps:</b></p>
-                <ol>
-                    ${stepsList}
-                </ol>
+                <ol>${stepsList}</ol>
 
-                <button onclick="rateRecipe('${recipe._id}')">Rate 5⭐</button>
-                <button onclick="favoriteRecipe('${recipe._id}')">❤️ Favorite</button>
+                <button onclick="rateRecipe('${recipe.name}')">⭐ Rate</button>
+                <button onclick="favoriteRecipe('${recipe.name}')">❤️ Favorite</button>
             </div>
             `;
         });
@@ -95,14 +83,15 @@ async function getRecipe(){
     }
 }
 
-// ⭐ RATE RECIPE
-async function rateRecipe(id){
+
+// ================= RATE RECIPE =================
+async function rateRecipe(name){
     try{
-        await fetch("http://localhost:5000/recipe/rate",{
+        await fetch(`${API_URL}/recipe/rate`,{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({
-                id:id,
+                name:name,
                 rating:5
             })
         });
@@ -113,14 +102,15 @@ async function rateRecipe(id){
     }
 }
 
-// ❤️ FAVORITE RECIPE
-async function favoriteRecipe(id){
+
+// ================= FAVORITE =================
+async function favoriteRecipe(name){
     try{
-        await fetch("/api/recipe/favorite",{
+        await fetch(`${API_URL}/recipe/favorite`,{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({
-                id:id
+                name:name
             })
         });
         alert("Added to Favorites!");
@@ -130,7 +120,8 @@ async function favoriteRecipe(id){
     }
 }
 
-// 📸 IMAGE INGREDIENT DETECTION
+
+// ================= IMAGE DETECT =================
 async function uploadImage(){
 
     const fileInput = document.getElementById("imageInput");
@@ -145,15 +136,15 @@ async function uploadImage(){
     formData.append("image", file);
 
     try{
+
         document.getElementById("result").innerHTML = "Scanning Ingredients...";
 
-        const res = await fetch("http://localhost:5000/image-detect",{
+        const res = await fetch(`${API_URL}/image-detect`,{
             method:"POST",
             body:formData
         });
 
         const data = await res.json();
-        console.log("Detected:",data);
 
         if(data.ingredients && data.ingredients.length > 0){
             document.getElementById("ingredients").value =

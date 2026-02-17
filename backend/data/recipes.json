@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "name": "Veg Fried Rice",
+    "ingredients": ["rice", "onion", "carrot", "beans", "soy sauce"],
+    "diet": "vegetarian",
+    "difficulty": "easy",
+    "time": 30
+  },
+  {
+    "id": 2,
+    "name": "Paneer Butter Masala",
+    "ingredients": ["paneer", "tomato", "onion", "butter", "cream"],
+    "diet": "vegetarian",
+    "difficulty": "medium",
+    "time": 40
+  },
+  {
+    "id": 3,
+    "name": "Masala Omelette",
+    "ingredients": ["egg", "onion", "tomato", "chilli"],
+    "diet": "non-vegetarian",
+    "difficulty": "easy",
+    "time": 10
+  },
+  {
+    "id": 4,
+    "name": "Chicken Curry",
+    "ingredients": ["chicken", "onion", "garlic", "tomato"],
+    "diet": "non-vegetarian",
+    "difficulty": "medium",
+    "time": 50
+  },
+  {
+    "id": 5,
+    "name": "Veg Sandwich",
+    "ingredients": ["bread", "onion", "tomato", "cheese"],
+    "diet": "vegetarian",
+    "difficulty": "easy",
+    "time": 5
+  },
+  {
+    "id": 6,
+    "name": "Pasta",
+    "ingredients": ["pasta", "tomato", "onion", "cheese"],
+    "diet": "vegetarian",
+    "difficulty": "easy",
+    "time": 25
+  },
+  {
+    "id": 7,
+    "name": "Grilled Chicken",
+    "ingredients": ["chicken", "salt", "pepper"],
+    "diet": "non-vegetarian",
+    "difficulty": "medium",
+    "time": 35
+  },
+  {
+    "id": 8,
+    "name": "Dal Tadka",
+    "ingredients": ["dal", "onion", "garlic", "chilli"],
+    "diet": "vegetarian",
+    "difficulty": "easy",
+    "time": 20
+  },
+  {
+    "id": 9,
+    "name": "Mushroom Curry",
+    "ingredients": ["mushroom", "onion", "tomato"],
+    "diet": "vegetarian",
+    "difficulty": "medium",
+    "time": 30
+  },
+  {
+    "id": 10,
+    "name": "Egg Fried Rice",
+    "ingredients": ["rice", "egg", "onion", "soy sauce"],
+    "diet": "non-vegetarian",
+    "difficulty": "easy",
+    "time": 25
+  },
+  {
+    "id": 11,
+    "name": "Veg Noodles",
+    "ingredients": ["noodles", "onion", "carrot"],
+    "diet": "vegetarian",
+    "difficulty": "easy",
+    "time": 20
+  },
+  {
+    "id": 12,
+    "name": "Chicken Biryani",
+    "ingredients": ["chicken", "rice", "onion"],
+    "diet": "non-vegetarian",
+    "difficulty": "hard",
+    "time": 60
+  },
+  {
+    "id": 13,
+    "name": "Aloo Paratha",
+    "ingredients": ["potato", "flour", "onion"],
+    "diet": "vegetarian",
+    "difficulty": "medium",
+    "time": 30
+  },
+  {
+    "id": 14,
+    "name": "Cheese Pizza",
+    "ingredients": ["flour", "cheese", "tomato"],
+    "diet": "vegetarian",
+    "difficulty": "medium",
+    "time": 45
+  },
+  {
+    "id": 15,
+    "name": "Tomato Soup",
+    "ingredients": ["tomato", "salt", "pepper"],
+    "diet": "vegetarian",
+    "difficulty": "easy",
+    "time": 15
+  },
+  {
+    "id": 16,
+    "name": "Fish Curry",
+    "ingredients": ["fish", "onion", "garlic"],
+    "diet": "non-vegetarian",
+    "difficulty": "medium",
+    "time": 40
+  },
+  {
+    "id": 17,
+    "name": "Veg Momos",
+    "ingredients": ["flour", "cabbage", "carrot"],
+    "diet": "vegetarian",
+    "difficulty": "hard",
+    "time": 50
+  },
+  {
+    "id": 18,
+    "name": "Egg Curry",
+    "ingredients": ["egg", "onion", "tomato"],
+    "diet": "non-vegetarian",
+    "difficulty": "easy",
+    "time": 25
+  },
+  {
+    "id": 19,
+    "name": "Paneer Tikka",
+    "ingredients": ["paneer", "onion", "capsicum"],
+    "diet": "vegetarian",
+    "difficulty": "medium",
+    "time": 35
+  },
+  {
+    "id": 20,
+    "name": "Veg Salad",
+    "ingredients": ["onion", "tomato", "cucumber"],
+    "diet": "vegetarian",
+    "difficulty": "easy",
+    "time": 10
+  }
+]
