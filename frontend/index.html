@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Recipe Generator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Smart Recipe Recommendation System</h2>
+
+<input type="text" id="ingredients" placeholder="Enter ingredients comma separated">
+
+<select id="diet">
+<option value="vegetarian">vegetarian</option>
+<option value="non-vegetarian">non-vegetarian</option>
+</select>
+
+<select id="health">
+<option value="none">No Preference</option>
+<option value="gluten-free">Gluten-Free</option>
+<option value="low-calorie">Low-Calorie</option>
+</select>
+
+<select id="difficulty">
+<option value="any">Any Difficulty</option>
+<option value="easy">Easy</option>
+<option value="medium">Medium</option>
+<option value="hard">Hard</option>
+</select>
+
+<input type="number" id="servings" placeholder="Enter servings">
+
+<input type="number" id="time" placeholder="Enter max time in minutes">
+
+<input type="file" id="imageInput">
+<button type="button" onclick="uploadImage()">Scan Ingredients</button>
+
+<button type="button" onclick="getRecipe()">Get Recipe</button>
+
+<div id="result"></div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+
+</html>
