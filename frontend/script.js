@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:5000"; 
+// ✅ RENDER BACKEND URL
+const API_URL = "https://smartrecipegenerator-1-cod7.onrender.com";
 
 async function getRecipe(){
 
@@ -41,14 +42,18 @@ async function getRecipe(){
         recipes.forEach(recipe => {
 
             let stepsList = "";
-            recipe.steps.forEach(step => {
-                stepsList += `<li>${step}</li>`;
-            });
+            if(recipe.steps){
+                recipe.steps.forEach(step => {
+                    stepsList += `<li>${step}</li>`;
+                });
+            }
 
             let ingredientsList = "";
-            recipe.ingredients.forEach(ing => {
-                ingredientsList += `<li>${ing}</li>`;
-            });
+            if(recipe.ingredients){
+                recipe.ingredients.forEach(ing => {
+                    ingredientsList += `<li>${ing}</li>`;
+                });
+            }
 
             output += `
             <div class="card">
@@ -81,8 +86,6 @@ async function getRecipe(){
     }
 }
 
-
-
 async function rateRecipe(name){
     try{
         await fetch(`${API_URL}/recipe/rate`,{
@@ -100,8 +103,6 @@ async function rateRecipe(name){
     }
 }
 
-
-
 async function favoriteRecipe(name){
     try{
         await fetch(`${API_URL}/recipe/favorite`,{
@@ -117,8 +118,6 @@ async function favoriteRecipe(name){
         alert("Favorite Failed!");
     }
 }
-
-
 
 async function uploadImage(){
 
@@ -164,3 +163,6 @@ async function uploadImage(){
 }
 
 window.uploadImage = uploadImage;
+window.getRecipe = getRecipe;
+window.rateRecipe = rateRecipe;
+window.favoriteRecipe = favoriteRecipe;
