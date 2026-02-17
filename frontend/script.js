@@ -1,7 +1,5 @@
 const API_URL = "http://localhost:5000"; 
-// ⚠️ AFTER DEPLOYMENT CHANGE THIS TO YOUR BACKEND URL
 
-// ================= GET RECIPES =================
 async function getRecipe(){
 
     document.getElementById("result").innerHTML = "Loading Recipes...";
@@ -84,7 +82,7 @@ async function getRecipe(){
 }
 
 
-// ================= RATE RECIPE =================
+
 async function rateRecipe(name){
     try{
         await fetch(`${API_URL}/recipe/rate`,{
@@ -103,7 +101,7 @@ async function rateRecipe(name){
 }
 
 
-// ================= FAVORITE =================
+
 async function favoriteRecipe(name){
     try{
         await fetch(`${API_URL}/recipe/favorite`,{
@@ -121,7 +119,7 @@ async function favoriteRecipe(name){
 }
 
 
-// ================= IMAGE DETECT =================
+
 async function uploadImage(){
 
     const fileInput = document.getElementById("imageInput");
